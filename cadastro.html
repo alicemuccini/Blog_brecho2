@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="assets/icone_blusa.png" type="icone do site">
+    <title>BréchoBlog</title>
+</head>
+
+<body>
+    <header>
+        <h1>BréchoBlog</h1>
+        <br>
+        <nav>
+            <ul class="nav">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="cadastro.html">Bréchos</a>
+            </ul>
+        </nav>
+        <br>
+    </header>
+    <main>
+        <br>
+        <h1>
+            Conheça os melhores bréchos da Zona Norte de Recife!
+        </h1>
+        <br>
+        <h2>
+           
+            Peça Rara
+        </h2>
+        <br>
+        <div class="brecho peca_rara">
+            <img src="assets/fachada_1.png" alt="peca_rara">
+        </div>
+        <p class="descricao_peca_rara">
+        <address>
+            R. Amélia, 22 - Graças, Recife - PE
+        </address>
+        <br>
+        Este brécho possui peças voltadas tanto para o público feminino quanto masculino e infantil, podendo agradar um
+        grande público.
+        <br>
+        </p>
+        <br>
+        <h2>
+         
+            Brechó Descabida
+        </h2>
+        <br>
+        <div class="descabida"><img src="assets/fachada_2.png" alt="descabida"></div>
+        <p class="descricao_descabida">
+        <address>
+            R. Amélia, 373 - Graças, Recife - PE
+        </address>
+        <br>
+        O descabida possui suas peças voltadas para o público feminino e com um preço mais acessível comparado ao
+        Peça Rara, porém ainda com muita qualidade em suas peças.
+        </p>
+        <br>
+        <br>
+        <h1>Bem-vindo ao Cadastro!</h1>
+        <br>
+        <h2>Você assim como eu é viciado em Bréchos?
+            Se cadastre para receber novidades no seu e-mail!
+        </h2>
+        <br>
+        <form id="cadastroForm">
+            <label>Nome Completo:
+                <input type="text" id="nomeCompleto" required>
+            </label>
+        
+            <label>Whatsapp:
+                <input type="tel" id="whatsapp" placeholder="(xx) xxxx-xxxx" required>
+            </label>
+        
+            <label>E-mail:
+                <input type="email" id="email">
+            </label>
+            <button type="submit" class="enviar">Enviar</button>
+        </form>
+        <ul id="listaCadastros"></ul>
+        
+        <br>
+        <br>
+    </main>
+
+
+</body>
+<script>
+
+    function adicionarCadastroAoLocalStorage(cadastro) {
+        let listaCadastros = JSON.parse(localStorage.getItem('cadastros')) || [];
+        listaCadastros.push(cadastro);
+        localStorage.setItem('cadastros', JSON.stringify(listaCadastros));
+    }
+    
+
+    function exibirListaCadastros() {
+        let listaCadastros = JSON.parse(localStorage.getItem('cadastros')) || [];
+        let listaCadastrosHTML = document.getElementById('listaCadastros');
+        listaCadastrosHTML.innerHTML = '';
+    
+        listaCadastros.forEach(cadastro => {
+            let li = document.createElement('li');
+            li.textContent = `${cadastro.nomeCompleto} - ${cadastro.whatsapp} - ${cadastro.email}`;
+            listaCadastrosHTML.appendChild(li);
+        });
+    }
+    
+
+    document.getElementById('cadastroForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+    
+
+        let nomeCompleto = document.getElementById('nomeCompleto').value;
+        let whatsapp = document.getElementById('whatsapp').value;
+        let email = document.getElementById('email').value;
+    
+
+        let novoCadastro = {
+            nomeCompleto: nomeCompleto,
+            whatsapp: whatsapp,
+            email: email
+        };
+    
+
+        adicionarCadastroAoLocalStorage(novoCadastro);
+    
+
+        exibirListaCadastros();
+    
+
+        document.getElementById('cadastroForm').reset();
+    });
+    
+
+    window.addEventListener('load', exibirListaCadastros);
+
+function limparListaLocalStorage() {
+    localStorage.removeItem('cadastros');
+}
+
+window.addEventListener('beforeunload', function(event) {
+    limparListaLocalStorage();
+});
+
+    </script>
+</html>
